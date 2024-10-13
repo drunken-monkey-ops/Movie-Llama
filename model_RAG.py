@@ -10,51 +10,62 @@ def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
 
 
+def retrive_docs(query):
+    persist_directory= 'chroma_vector_store'
 
+    local_embeddings = OllamaEmbeddings(model="nomic-embed-text")
+    loaded_vectorstore = Chroma(
+        embedding_function= local_embeddings,
+        persist_directory=persist_directory
+    )
 
-persist_directory= 'chroma_vector_store'
+#question = "I'm looking for an Action comedy films"
 
-local_embeddings = OllamaEmbeddings(model="nomic-embed-text")
-loaded_vectorstore = Chroma(
-    embedding_function= local_embeddings,
-    persist_directory=persist_directory
-)
+    docs = loaded_vectorstore.similarity_search(query)
 
-question = "I'm looking for an Action comedy films"
+    return docs
 
-docs = loaded_vectorstore.similarity_search(question)
+# print(docs)
 
-
-print(docs)
-
-
-model = ChatOllama(
+def get_response(query , docs):
+    model = ChatOllama(
     model="llama3.1:latest",
-)
+    )
 
 
-RAG_TEMPLATE = """
-You are an assistant for recommanding movies. Use the following pieces of retrieved context to suggest atleast 3 movies. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.
+    RAG_TEMPLATE = """
+    You are an assistant for recommanding movies. Use the following pieces of retrieved context to suggest atleast 3 movies. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.
 
-<context>
-{context}
-</context>
+    <context>
+    {context}
+    </context>
 
-Answer the following question:
+    Answer the following question:
 
-{query}"""
+    {query}"""
 
-rag_prompt = ChatPromptTemplate.from_template(RAG_TEMPLATE)
+    rag_prompt = ChatPromptTemplate.from_template(RAG_TEMPLATE)
 
-chain = (
-    RunnablePassthrough.assign(context=lambda input: format_docs(input["context"]))
-    | rag_prompt
-    | model
-    | StrOutputParser()
-)
+    chain = (
+        RunnablePassthrough.assign(context=lambda input: format_docs(input["context"]))
+        | rag_prompt
+        | model
+        | StrOutputParser()
+    )
 
-query = "I am want to burst my stoach out I would like to watch some good comedy films"
+    return chain.invoke({"context": docs, "query": query})
+#query = "I am want to burst my stoach out I would like to watch some good comedy films"
 
-docs = loaded_vectorstore.similarity_search(query)
+#docs = loaded_vectorstore.similarity_search(query)
 
-print(chain.invoke({"context": docs, "query": query}))
+#print(chain.invoke({"context": docs, "query": query}))
+
+
+def get_rag_response(query):
+
+
+
+
+    docs = retrive_docs(query)
+    response = get_response(query=query , docs=docs)
+    return response
