@@ -55,8 +55,16 @@ export TMDB_API_KEY=your_api_key
 Run the assistant:
 
 ```bash
-python movie_llama.py
+python model_RAG.py
 ```
+For Chatbot interface:
+
+```bash
+python chatbot.py
+```
+
+
+⚠️ **Important:** To create a new dataset or custom movie data set please create a new file where you can extract the movies the movies and use the vector_store.py to create embeddings for you db. Feel free to use the precreated dataset stored in chroma_vector_store.
 
 ## Methodology
 
