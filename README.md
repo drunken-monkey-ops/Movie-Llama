@@ -1,6 +1,6 @@
 # Movie-Llama: A Movie Recommendation Assistant
 
-[![GitHub](https://img.shields.io/github/license/drunken-monkey-ops/Movie-Llama)](https://github.com/drunken-monkey-ops/Movie-Llama/blob/main/LICENSE)
+
 
 Movie-Llama is an AI-driven movie recommendation assistant designed to spotlight films from underrepresented cultures and communities. Leveraging a Large Language Model (LLM) and vector embeddings, Movie-Llama provides users with curated movie suggestions that celebrate cultural diversity in global cinema. Built using data from The Movie Database (TMDB), this assistant enhances user discovery of niche and diverse films, promoting cross-cultural understanding and appreciation.
 
