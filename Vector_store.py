@@ -4,7 +4,7 @@ from langchain_chroma import Chroma
 from langchain_ollama import OllamaEmbeddings
 from langchain.docstore.document import Document
 
-loader = JSONLoader(file_path='Actual_data.json' , jq_schema= '.[] | {title, genres, original_language ,overview}', text_content=False)
+loader = JSONLoader(file_path='File_name' , jq_schema= '.[] | {title, genres, original_language ,overview}', text_content=False)
 
 
 documents = loader.load()
