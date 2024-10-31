@@ -64,7 +64,7 @@ python chatbot.py
 ```
 
 
-⚠️ **Important:** To create a new dataset or custom movie data set please create a new file where you can extract the movies the movies and use the vector_store.py to create embeddings for you db. Feel free to use the precreated dataset stored in chroma_vector_store.
+⚠️ **Important:** To create a new dataset or custom movie data set please create a new file where you can extract the movies and use the vector_store.py to create embeddings for you db. Feel free to use the precreated dataset stored in chroma_vector_store.
 
 ## Methodology
 
